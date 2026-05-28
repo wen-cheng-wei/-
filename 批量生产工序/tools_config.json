@@ -1,0 +1,41 @@
+{
+	"1": {
+		"class_id": "ImageCapture",
+		"args": {
+			"affect_image": true,
+			"enabled": true,
+			"name": ""
+		}
+	},
+	"2": {
+		"class_id": "DLObjDetect",
+		"args": {
+			"enabled": true,
+			"model_path": "hangkong",
+			"name": "",
+			"nms_threshold": 0.44999998807907104,
+			"roi": null,
+			"threshold": 0.5,
+			"valid": false
+		}
+	},
+	"3": {
+		"class_id": "RunScript",
+		"args": {
+			"enabled": true,
+			"name": "",
+			"ns": "",
+			"script": ""
+		}
+	},
+	"4": {
+		"class_id" : "VideoCapture",
+		"args" : 
+		{
+			"affect_image" : true,
+			"enabled" : true,
+			"fps" : 25,
+			"name" : "VideoCapture1"
+		}
+	}
+}
