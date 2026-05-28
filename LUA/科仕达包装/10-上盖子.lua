@@ -1,8 +1,8 @@
 RunScript_4ce9b2e5_8b57_4d75_8d35_481b1dc25fe9= {}
 
 local tool_name = 'DLObjDetect10'  -- 需访问的工具名
-local class_name = '10-上盖子'  -- 需检测的类别名
-local required_count = 10    -- 需要累计的总数
+local class_name = '盖子'  -- 需检测的类别名
+local required_count = 50    -- 需要累计的总数
 local total_count = 0         -- 累计总数
 
 function RunScript_4ce9b2e5_8b57_4d75_8d35_481b1dc25fe9.setup(this, ctx)

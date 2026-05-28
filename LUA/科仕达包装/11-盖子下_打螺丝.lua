@@ -1,15 +1,63 @@
-RunScript_d01fb300_ab58_44a7_8781_ef5c9ff44b9d= {}
+RunScript_0593202fc380442bb25c2825c7643676= {}
 
 local tool_name = 'DLObjDetect11'  -- 需访问的工具名
-local class_name = '11-盖子下_打螺丝'  -- 需检测的类别名
-local required_count = 10    -- 需要累计的总数
+local class_name = '电转枪'  -- 需检测的类别名
+local required_count = 20    -- 需要累计的总数
 local total_count = 0         -- 累计总数
 
-function RunScript_d01fb300_ab58_44a7_8781_ef5c9ff44b9d.setup(this, ctx)
+local overlap_threshold=0.8 -- 交集面积阈值
+
+--固定ROI区域
+local ROI_Region={left=93,bottom=1141,right=440,top=1053}
+
+--初始化函数（初始化历史记录）
+function RunScript_0593202fc380442bb25c2825c7643676.setup(this, ctx)
     total_count = 0
 end
 
-function RunScript_d01fb300_ab58_44a7_8781_ef5c9ff44b9d.exec(this, ctx)
+--返回交并比,输入左下角，右上角坐标
+local function overlap_ratio(box1,box2)
+    local x1=box1.left
+    local y1=box1.bottom
+    local x2=box1.right
+    local y2=box1.top
+    local x3=box2.left
+    local y3=box2.bottom
+    local x4=box2.right
+    local y4=box2.top
+    -- 计算交集区域
+    local left   = math.max(x1, x3)
+    local right  = math.min(x2, x4)
+    local bottom = math.min(y1, y3)
+    local top    = math.max(y2, y4)
+
+    -- 计算交集面积
+    local inter_w = right - left
+    local inter_h = bottom - top
+    local inter_area = 0
+    if inter_w > 0 and inter_h > 0 then
+        inter_area = inter_w * inter_h
+    else
+        inter_area=0
+    end
+
+    -- 计算各自面积
+    local area1 = (x2 - x1) * (y1 - y2)
+    local area2 = (x4 - x3) * (y3 - y4)
+
+    -- 并集面积
+    local union_area = area1 + area2 - inter_area
+
+    -- 避免除零
+    if union_area <= 0 then
+        return 0
+    end
+
+    return inter_area / area1
+end
+
+--执行函数
+function RunScript_0593202fc380442bb25c2825c7643676.exec(this, ctx)
     local tool = ctx:get_tool_by_name(tool_name)
     
     if tool == nil then
@@ -20,7 +68,7 @@ function RunScript_d01fb300_ab58_44a7_8781_ef5c9ff44b9d.exec(this, ctx)
     
     -- 直接计数并累加
     for i, obj in ipairs(result) do
-        if obj.class_name == class_name then
+        if obj.class_name == class_name and overlap_ratio(obj.bounding,ROI_Region)>overlap_threshold then
             total_count = total_count + 1
         end
     end
@@ -32,14 +80,14 @@ function RunScript_d01fb300_ab58_44a7_8781_ef5c9ff44b9d.exec(this, ctx)
     end
 end
 
-function RunScript_d01fb300_ab58_44a7_8781_ef5c9ff44b9d.cleanup(this, ctx)
+function RunScript_0593202fc380442bb25c2825c7643676.cleanup(this, ctx)
     total_count = 0
 end
 
-function RunScript_d01fb300_ab58_44a7_8781_ef5c9ff44b9d.on_process_begin(this, ctx)
+function RunScript_0593202fc380442bb25c2825c7643676.on_process_begin(this, ctx)
     total_count = 0
 end
 
-function RunScript_d01fb300_ab58_44a7_8781_ef5c9ff44b9d.on_process_end(this, ctx)
+function RunScript_0593202fc380442bb25c2825c7643676.on_process_end(this, ctx)
     total_count = 0
 end
