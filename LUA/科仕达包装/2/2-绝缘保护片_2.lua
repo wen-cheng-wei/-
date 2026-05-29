@@ -1,4 +1,4 @@
-RunScript_d7d054ac_fdf2_40fb_b380_8bb7a5b0133c= {}
+RunScript_e676cc7c634d45c6a69b33217c223fab= {}
 
 local tool_name = 'DLObjDetect2'  -- 需访问的工具名
 local class_name = '绝缘保护片_有'  -- 需检测的类别名
@@ -7,11 +7,11 @@ local total_count = 0         -- 累计总数
 
 local x_line_threshold = 350  -- x分割线
 
-function RunScript_d7d054ac_fdf2_40fb_b380_8bb7a5b0133c.setup(this, ctx)
+function RunScript_e676cc7c634d45c6a69b33217c223fab.setup(this, ctx)
     total_count = 0
 end
 
-function RunScript_d7d054ac_fdf2_40fb_b380_8bb7a5b0133c.exec(this, ctx)
+function RunScript_e676cc7c634d45c6a69b33217c223fab.exec(this, ctx)
     local tool = ctx:get_tool_by_name(tool_name)
     
     if tool == nil then
@@ -34,14 +34,14 @@ function RunScript_d7d054ac_fdf2_40fb_b380_8bb7a5b0133c.exec(this, ctx)
     end
 end
 
-function RunScript_d7d054ac_fdf2_40fb_b380_8bb7a5b0133c.cleanup(this, ctx)
+function RunScript_e676cc7c634d45c6a69b33217c223fab.cleanup(this, ctx)
     total_count = 0
 end
 
-function RunScript_d7d054ac_fdf2_40fb_b380_8bb7a5b0133c.on_process_begin(this, ctx)
+function RunScript_e676cc7c634d45c6a69b33217c223fab.on_process_begin(this, ctx)
     total_count = 0
 end
 
-function RunScript_d7d054ac_fdf2_40fb_b380_8bb7a5b0133c.on_process_end(this, ctx)
+function RunScript_e676cc7c634d45c6a69b33217c223fab.on_process_end(this, ctx)
     total_count = 0
 end

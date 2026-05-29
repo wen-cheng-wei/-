@@ -50,5 +50,5 @@ end
 function RunScript_5f98a059826346a38c655e2191854229.on_process_end(this, ctx)
     statu_current = 0 
 end
-= {}
+
 

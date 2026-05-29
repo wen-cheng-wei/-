@@ -797,7 +797,7 @@ class FrameAnnotator:
         # 加载图片
         self.image_loader.load_and_display(path)
         
-        # === 新的合并继承逻辑（支持可配置容差和自选标签继承）===
+        # === 修复后的继承逻辑：先继承上一帧，再补充当前帧独有的框 ===
         saved_ann = self.manager.annotations.get(fname)
         
         def filter_by_inherit_labels(boxes):
@@ -806,21 +806,22 @@ class FrameAnnotator:
                 return boxes  # 如果没有选择任何标签，继承全部
             return [box for box in boxes if box.get('label', 'object') in self.inherit_labels]
         
-        if saved_ann is not None and len(saved_ann) > 0:
-            # 当前帧已有标注 → 以自身为主，补充上一帧缺失的框
-            self.current_boxes.clear()
-            self.current_boxes.extend(copy.deepcopy(saved_ann))
+        if self.inherit_mode and self.current_idx > 0:
+            # 继承模式开启且不是第一张图片 → 先继承上一帧的框（最新的）
+            prev_fname = os.path.basename(self.image_files[self.current_idx - 1])
+            prev_ann = self.manager.annotations.get(prev_fname, [])
             
-            if self.inherit_mode and self.current_idx > 0:
-                prev_fname = os.path.basename(self.image_files[self.current_idx - 1])
-                prev_ann = self.manager.annotations.get(prev_fname, [])
-                
-                # 按继承标签过滤
-                filtered_prev_ann = filter_by_inherit_labels(prev_ann)
-                
-                # 使用可配置容差进行去重
+            # 按继承标签过滤
+            filtered_prev_ann = filter_by_inherit_labels(prev_ann)
+            
+            # 先清空当前框，继承上一帧的框（保证最新的继承优先）
+            self.current_boxes.clear()
+            self.current_boxes.extend(copy.deepcopy(filtered_prev_ann))
+            
+            if saved_ann is not None and len(saved_ann) > 0:
+                # 当前帧已有保存的标注 → 补充当前帧独有的框（用户之前手动添加的）
                 existing = set()
-                tolerance = self.inherit_tolerance  # 来自类的实例变量
+                tolerance = self.inherit_tolerance
                 
                 for box in self.current_boxes:
                     key = (
@@ -832,36 +833,43 @@ class FrameAnnotator:
                     )
                     existing.add(key)
                 
-                for pbox in filtered_prev_ann:
-                    pkey = (
-                        round(pbox['x'] / tolerance),
-                        round(pbox['y'] / tolerance),
-                        round(pbox['width'] / tolerance),
-                        round(pbox['height'] / tolerance),
-                        pbox.get('label', 'object')
+                # 添加当前帧保存的、但不在继承框中的框（用户手动添加的）
+                for sbox in saved_ann:
+                    skey = (
+                        round(sbox['x'] / tolerance),
+                        round(sbox['y'] / tolerance),
+                        round(sbox['width'] / tolerance),
+                        round(sbox['height'] / tolerance),
+                        sbox.get('label', 'object')
                     )
-                    if pkey not in existing:
-                        self.current_boxes.append(copy.deepcopy(pbox))
+                    if skey not in existing:
+                        self.current_boxes.append(copy.deepcopy(sbox))
         
-        elif self.inherit_mode and self.current_idx > 0:
-            # 当前帧完全没有标注 → 继承上一帧指定标签的框
-            prev_fname = os.path.basename(self.image_files[self.current_idx - 1])
-            prev_ann = self.manager.annotations.get(prev_fname, [])
-            
-            # 按继承标签过滤
-            filtered_prev_ann = filter_by_inherit_labels(prev_ann)
-            
+        elif saved_ann is not None and len(saved_ann) > 0:
+            # 没有开启继承模式，但有保存的标注 → 加载已保存的标注
             self.current_boxes.clear()
-            self.current_boxes.extend(copy.deepcopy(filtered_prev_ann))
+            self.current_boxes.extend(copy.deepcopy(saved_ann))
         
         else:
-            # 无继承模式或第一张图片
+            # 无继承模式且无保存的标注，或第一张图片
             self.current_boxes.clear()
         
-        # 重置选中状态并重绘（确保所有相关状态都被清除）
-        self.drawer.selected_box = None
-        if hasattr(self.interaction, 'selected_box'):
-            self.interaction.selected_box = None  # 同步清除InteractionHandler的选中状态
+        # 保留选中状态（允许跨图片拖动）
+        # 如果当前有选中的框，尝试在新图片中找到对应的框
+        if self.drawer.selected_box is not None and 0 <= self.drawer.selected_box < len(self.current_boxes):
+            # 保持选中状态
+            pass
+        elif len(self.current_boxes) > 0:
+            # 默认选中第一个框（方便继续拖动）
+            self.drawer.selected_box = 0
+            if hasattr(self.interaction, 'selected_box'):
+                self.interaction.selected_box = 0
+        else:
+            # 没有框，清除选中状态
+            self.drawer.selected_box = None
+            if hasattr(self.interaction, 'selected_box'):
+                self.interaction.selected_box = None
+        
         self.drawer.redraw(self.current_boxes)
         self.update_status()
         
