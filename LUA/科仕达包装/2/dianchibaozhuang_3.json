@@ -1,0 +1,494 @@
+{
+	"name": "dianchibaozhuang_3",
+	"code": "11",
+	"cameras": null,
+	"devices": null,
+	"vars": null,
+	"description": "",
+	"processes": [
+		{
+			"name": "1-绝缘保护片_1",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture1"
+					},
+					"class_id": "VideoCapture",
+					"id": "5e5cf0e4-5cc0-4718-844e-3358148278e4",
+					"name": "VideoCapture1"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect1",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "c1178810-8162-4b81-bd60-f19d544ab3ff",
+					"name": "DLObjDetect1"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript1",
+						"ns": "RunScript_5f98a059826346a38c655e2191854229",
+						"script": "RunScript_5f98a059826346a38c655e2191854229= {}\n\nlocal tool_name = 'DLObjDetect1'  -- 需访问的工具名\nlocal class_name = '绝缘保护片_1'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_5f98a059826346a38c655e2191854229.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_5f98a059826346a38c655e2191854229.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_5f98a059826346a38c655e2191854229.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_5f98a059826346a38c655e2191854229.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_5f98a059826346a38c655e2191854229.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "f5213b9a-1fcc-4bef-8ae5-2fc9d3689302",
+					"name": "RunScript1"
+				}
+			]
+		},
+		{
+			"name": "2-绝缘保护片_2",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture2"
+					},
+					"class_id": "VideoCapture",
+					"id": "e6e583a2-2f81-4480-babd-b79a29122127",
+					"name": "VideoCapture2"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect2",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "44db9216-f211-45bf-af5f-4d42238804d8",
+					"name": "DLObjDetect2"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript2",
+						"ns": "RunScript_e676cc7c634d45c6a69b33217c223fab",
+						"script": "RunScript_e676cc7c634d45c6a69b33217c223fab= {}\n\nlocal tool_name = 'DLObjDetect2'  -- 需访问的工具名\nlocal class_name = '绝缘保护片_2'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_e676cc7c634d45c6a69b33217c223fab.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_e676cc7c634d45c6a69b33217c223fab.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_e676cc7c634d45c6a69b33217c223fab.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_e676cc7c634d45c6a69b33217c223fab.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_e676cc7c634d45c6a69b33217c223fab.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "7d124b2c-ac22-499d-be84-29b97d2ecac8",
+					"name": "RunScript2"
+				}
+			]
+		},
+		{
+			"name": "3-防护网",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture3"
+					},
+					"class_id": "VideoCapture",
+					"id": "9bf1aa85-a622-49ed-a296-68fe2535b41a",
+					"name": "VideoCapture3"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect3",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "46c0a1c8-aca6-4009-8067-349e0a2e7f7f",
+					"name": "DLObjDetect3"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript3",
+						"ns": "RunScript_8b67ada8f0814f9cb5f5bf9ce51e90f9",
+						"script": "RunScript_8b67ada8f0814f9cb5f5bf9ce51e90f9= {}\n\nlocal tool_name = 'DLObjDetect3'  -- 需访问的工具名\nlocal class_name = '防护网'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_8b67ada8f0814f9cb5f5bf9ce51e90f9.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_8b67ada8f0814f9cb5f5bf9ce51e90f9.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_8b67ada8f0814f9cb5f5bf9ce51e90f9.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_8b67ada8f0814f9cb5f5bf9ce51e90f9.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_8b67ada8f0814f9cb5f5bf9ce51e90f9.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "429ea648-1370-4c99-9296-9faccadc0d8b",
+					"name": "RunScript3"
+				}
+			]
+		},
+		{
+			"name": "4-线",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture4"
+					},
+					"class_id": "VideoCapture",
+					"id": "ca24c6a2-7a6c-4281-9cd2-9830eea1dca3",
+					"name": "VideoCapture4"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect4",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "98b32af3-c6fe-43dd-81ea-6c88a3f0ce26",
+					"name": "DLObjDetect4"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript4",
+						"ns": "RunScript_71ef0bf4699b46539150e03ea18a5b64",
+						"script": "RunScript_71ef0bf4699b46539150e03ea18a5b64= {}\n\nlocal tool_name = 'DLObjDetect4'  -- 需访问的工具名\nlocal class_name = '线'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_71ef0bf4699b46539150e03ea18a5b64.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_71ef0bf4699b46539150e03ea18a5b64.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_71ef0bf4699b46539150e03ea18a5b64.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_71ef0bf4699b46539150e03ea18a5b64.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_71ef0bf4699b46539150e03ea18a5b64.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "40058603-1fa9-4534-bb84-a9f7b3722313",
+					"name": "RunScript4"
+				}
+			]
+		},
+		{
+			"name": "5-说明书",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture5"
+					},
+					"class_id": "VideoCapture",
+					"id": "3a74abeb-ea77-45c6-a10f-c4461476ac1a",
+					"name": "VideoCapture5"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect5",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "d9e4d55e-65b6-42cb-90bc-40f14fba23dd",
+					"name": "DLObjDetect5"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript5",
+						"ns": "RunScript_1432d6c1553d4ab18baaa76e7f4dfc2a",
+						"script": "RunScript_1432d6c1553d4ab18baaa76e7f4dfc2a= {}\n\nlocal tool_name = 'DLObjDetect5'  -- 需访问的工具名\nlocal class_name = '说明书'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_1432d6c1553d4ab18baaa76e7f4dfc2a.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_1432d6c1553d4ab18baaa76e7f4dfc2a.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_1432d6c1553d4ab18baaa76e7f4dfc2a.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_1432d6c1553d4ab18baaa76e7f4dfc2a.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_1432d6c1553d4ab18baaa76e7f4dfc2a.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "854c5c92-340d-4ff9-abb9-9bc3fe16729d",
+					"name": "RunScript5"
+				}
+			]
+		},
+		{
+			"name": "6-材料1",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture6"
+					},
+					"class_id": "VideoCapture",
+					"id": "495f3799-0688-4a52-8c76-1a38f519182f",
+					"name": "VideoCapture6"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect6",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "09a4cf48-9b62-43ff-9f72-714a8d061ac5",
+					"name": "DLObjDetect6"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript6",
+						"ns": "RunScript_c21d11ce2afa4578a4ebeda00326194d",
+						"script": "RunScript_c21d11ce2afa4578a4ebeda00326194d= {}\n\nlocal tool_name = 'DLObjDetect6'  -- 需访问的工具名\nlocal class_name = '材料1'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_c21d11ce2afa4578a4ebeda00326194d.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_c21d11ce2afa4578a4ebeda00326194d.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_c21d11ce2afa4578a4ebeda00326194d.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_c21d11ce2afa4578a4ebeda00326194d.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_c21d11ce2afa4578a4ebeda00326194d.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "527df0a3-0cd6-48be-bf5c-49d34be27d62",
+					"name": "RunScript6"
+				}
+			]
+		},
+		{
+			"name": "7-材料2",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture7"
+					},
+					"class_id": "VideoCapture",
+					"id": "63b030f8-8eee-4861-92a9-57ea90ed1eb7",
+					"name": "VideoCapture7"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect7",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "5828c1c3-2321-497b-a256-476d442fc7cf",
+					"name": "DLObjDetect7"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript7",
+						"ns": "RunScript_9e06ffe5d7224ac8a7f43af94c97c7a8",
+						"script": "RunScript_9e06ffe5d7224ac8a7f43af94c97c7a8= {}\n\nlocal tool_name = 'DLObjDetect7'  -- 需访问的工具名\nlocal class_name = '材料2'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_9e06ffe5d7224ac8a7f43af94c97c7a8.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_9e06ffe5d7224ac8a7f43af94c97c7a8.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_9e06ffe5d7224ac8a7f43af94c97c7a8.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_9e06ffe5d7224ac8a7f43af94c97c7a8.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_9e06ffe5d7224ac8a7f43af94c97c7a8.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "0f6f89ac-c4d9-440f-899c-9ef9d3364c3e",
+					"name": "RunScript7"
+				}
+			]
+		},
+		{
+			"name": "8-材料3",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture8"
+					},
+					"class_id": "VideoCapture",
+					"id": "2155e569-a57e-4e22-96f9-584c68878504",
+					"name": "VideoCapture8"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect8",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "2648af81-1af8-4729-90d1-1b641b06c637",
+					"name": "DLObjDetect8"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript8",
+						"ns": "RunScript_43dec99cd9f54be2b12056ca80bc67f1",
+						"script": "RunScript_43dec99cd9f54be2b12056ca80bc67f1= {}\n\nlocal tool_name = 'DLObjDetect8'  -- 需访问的工具名\nlocal class_name = '材料3'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_43dec99cd9f54be2b12056ca80bc67f1.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_43dec99cd9f54be2b12056ca80bc67f1.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_43dec99cd9f54be2b12056ca80bc67f1.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_43dec99cd9f54be2b12056ca80bc67f1.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_43dec99cd9f54be2b12056ca80bc67f1.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "3d785685-8f1d-4c85-8fbc-17b94f48b30f",
+					"name": "RunScript8"
+				}
+			]
+		},
+		{
+			"name": "9-材料4",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture9"
+					},
+					"class_id": "VideoCapture",
+					"id": "f63f607c-f7dd-472d-b909-85bdb7cf3b23",
+					"name": "VideoCapture9"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect9",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "3190b88c-a6c7-46f2-b9f5-03931ccc7e83",
+					"name": "DLObjDetect9"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript9",
+						"ns": "RunScript_0861c2dd97b54f96bea2f69411764657",
+						"script": "RunScript_0861c2dd97b54f96bea2f69411764657= {}\n\nlocal tool_name = 'DLObjDetect9'  -- 需访问的工具名\nlocal class_name = '材料4'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_0861c2dd97b54f96bea2f69411764657.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_0861c2dd97b54f96bea2f69411764657.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_0861c2dd97b54f96bea2f69411764657.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_0861c2dd97b54f96bea2f69411764657.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_0861c2dd97b54f96bea2f69411764657.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "b7f8b6e3-49d0-4358-931f-d246cdda0342",
+					"name": "RunScript9"
+				}
+			]
+		},
+		{
+			"name": "10-材料5",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture10"
+					},
+					"class_id": "VideoCapture",
+					"id": "b8b196d1-ed0f-474a-9a2f-a5d7ec364ea3",
+					"name": "VideoCapture10"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect10",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "18529760-6dbd-4ce6-af5c-27127eb40592",
+					"name": "DLObjDetect10"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript10",
+						"ns": "RunScript_5677cfde7fc74aa19fd8664630ac3741",
+						"script": "RunScript_5677cfde7fc74aa19fd8664630ac3741= {}\n\nlocal tool_name = 'DLObjDetect10'  -- 需访问的工具名\nlocal class_name = '材料5'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_5677cfde7fc74aa19fd8664630ac3741.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_5677cfde7fc74aa19fd8664630ac3741.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_5677cfde7fc74aa19fd8664630ac3741.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_5677cfde7fc74aa19fd8664630ac3741.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_5677cfde7fc74aa19fd8664630ac3741.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "6761f04d-25d1-4e19-baf4-aa82ebab5f1e",
+					"name": "RunScript10"
+				}
+			]
+		},
+		{
+			"name": "11-盖子",
+			"description": "",
+			"limit_time": 0,
+			"logo": "\n",
+			"tools": [
+				{
+					"args": {
+						"affect_image": true,
+						"enabled": true,
+						"fps": 25,
+						"name": "VideoCapture11"
+					},
+					"class_id": "VideoCapture",
+					"id": "36af1a1c-bac5-4a1f-811f-829d1e7b1fb3",
+					"name": "VideoCapture11"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"model_path": "hangkong",
+						"name": "DLObjDetect11",
+						"nms_threshold": 0.44999998807907104,
+						"roi": null,
+						"threshold": 0.5,
+						"valid": false
+					},
+					"class_id": "DLObjDetect",
+					"id": "87f8fca3-0d5e-40dd-b03e-80328028820b",
+					"name": "DLObjDetect11"
+				},
+				{
+					"args": {
+						"enabled": true,
+						"name": "RunScript11",
+						"ns": "RunScript_bdf645b1bf3746f69940b92770f1a5dd",
+						"script": "RunScript_bdf645b1bf3746f69940b92770f1a5dd= {}\n\nlocal tool_name = 'DLObjDetect11'  -- 需访问的工具名\nlocal class_name = '盖子'  -- 需检测的类别名\nlocal required_count = 30    -- 需要累计的总数\nlocal total_count = 0         -- 累计总数\n\nfunction RunScript_bdf645b1bf3746f69940b92770f1a5dd.setup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_bdf645b1bf3746f69940b92770f1a5dd.exec(this, ctx)\n    local tool = ctx:get_tool_by_name(tool_name)\n    \n    if tool == nil then\n        return 1, 'Cannot find ' .. tool_name\n    end\n\n    local result = tool:result()\n    \n    -- 直接计数并累加\n    for i, obj in ipairs(result) do\n        if obj.class_name == class_name then\n            total_count = total_count + 1\n        end\n    end\n\n    if total_count >= required_count then\n        return 0, 'DONE: '.. class_name ..' x'.. total_count\n    else\n        return 1, 'PROGRESS: '.. total_count ..'/'.. required_count\n    end\nend\n\nfunction RunScript_bdf645b1bf3746f69940b92770f1a5dd.cleanup(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_bdf645b1bf3746f69940b92770f1a5dd.on_process_begin(this, ctx)\n    total_count = 0\nend\n\nfunction RunScript_bdf645b1bf3746f69940b92770f1a5dd.on_process_end(this, ctx)\n    total_count = 0\nend\n"
+					},
+					"class_id": "RunScript",
+					"id": "e45b7445-3088-474c-93c8-93073209c4b7",
+					"name": "RunScript11"
+				}
+			]
+		}
+	]
+}

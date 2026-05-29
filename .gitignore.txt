@@ -1,0 +1,53 @@
+# 1. 系统自动生成的垃圾文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 2. 编辑器/IDE 自动生成的文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 3. 日志文件
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# 4. 临时文件、缓存、备份
+tmp/
+temp/
+*.tmp
+*.cache
+*.bak
+*.backup
+backup/  # 你的 backup 文件夹直接忽略！
+
+# 5. 依赖包、编译文件
+node_modules/
+dist/
+build/
+*.o
+*.obj
+*.dll
+*.exe
+
+# 6. 敏感信息（密码、配置）
+.env
+.env.local
+.env.*.local
+config.json
+secret*
+
+# 7. 大文件（图片/视频/压缩包 不想上传可开启）
+# *.zip
+# *.rar
+# *.png
+# *.jpg
+# *.mp4
