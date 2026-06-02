@@ -3,7 +3,8 @@ RunScript_25fbb148_8e24_4aff_8928_24faa8ae4f25 = {}
 -- 配置参数
 local class_name = ""        -- 需要检测的标签名称
 local tool_name = ""         -- 对象检测工具名称
-local alarm_tool_name = ""   -- 报警工具名称（可选）
+local alarm_tool_name = "AlarmControl1"   -- 报警开
+local alarm_tool_name2 = "AlarmControl2"   -- 报警关
 
 -- 四个矩形ROI区域定义（左下、右上、右下、左上）
 -- 格式: {left=左边界, bottom=下边界, right=右边界, top=上边界}
@@ -94,6 +95,7 @@ end
 
 function RunScript_25fbb148_8e24_4aff_8928_24faa8ae4f25.exe(this, ctx)
     local tool = ctx:get_tool_by_name(tool_name)
+
     if tool == nil then
         record_history(detection_history, false)
         return 1, 'Cannot find tool: ' .. tool_name
@@ -133,17 +135,14 @@ function RunScript_25fbb148_8e24_4aff_8928_24faa8ae4f25.exe(this, ctx)
     
     -- 连续报警触发
     if consecutive_alarm >= alarm_history.Required_Consecutive then
-        if alarm_tool_name ~= "" then
-            local alarm_tool = ctx:get_tool_by_name(alarm_tool_name)
-            if alarm_tool ~= nil then
-                alarm_tool:exec(ctx)
-            end
-        end
+        local alarm_1 = ctx:get_tool_by_name(alarm_tool_name)
+        if alarm_1 then alarm_1:exec(ctx) end     --触发报警
         return 2, 'Error: Object in wrong ROI'
     end
-    
     -- 连续检测成功
     if consecutive_detection >= detection_history.Required_Consecutive then
+        local alarm_2 = ctx:get_tool_by_name(alarm_tool_name2)
+        if alarm_2 then alarm_2:exec(ctx) end   --关闭报警灯
         return 0, 'Successful: Object in correct ROI'
     end
     
