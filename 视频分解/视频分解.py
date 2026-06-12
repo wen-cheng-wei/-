@@ -45,6 +45,6 @@ def split_video_to_frames(video_path: str, output_dir: str):
 
 
 if __name__ == "__main__":
-    input_video = r"C:\Users\wcw\Desktop\科仕达包装视频\20524144b6bcd23f9abdc9b5dbc4645f.mp4"
-    output_folder = r"D:\工作\行为检测\DEMO\科仕达包装\3\图片"
+    input_video = r"D:\工作\行为检测\DEMO\拧螺丝\原视频\微信视频2026-06-11_161408_379.mp4"
+    output_folder = r"D:\工作\行为检测\DEMO\拧螺丝\图片"
     split_video_to_frames(input_video, output_folder)
